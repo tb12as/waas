@@ -5,6 +5,7 @@ import (
 	"github.com/tb12as/why-as-a-service/internal/app"
 	"github.com/tb12as/why-as-a-service/internal/config"
 	"github.com/tb12as/why-as-a-service/internal/database"
+	"github.com/tb12as/why-as-a-service/internal/middleware"
 )
 
 type APIReason struct {
@@ -23,9 +24,17 @@ func main() {
 		panic(err)
 	}
 
-	r := gin.Default()
-	r.GET("/", func(c *gin.Context) {
-		app.RandomReasonHandler(c, db)
-	})
+	var r *gin.Engine
+	if cfg.AppEnv == "production" {
+		gin.SetMode(gin.ReleaseMode)
+		r = gin.New()
+	} else {
+		r = gin.Default() // local only
+	}
+	r.Use(middleware.RateLimiter())
+
+	rh := app.ReasonHandler{DB: db}
+	r.GET("/", rh.RandomReasonHandler)
+
 	r.Run(":" + cfg.AppPort)
 }

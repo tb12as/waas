@@ -41,6 +41,7 @@ func Load(cfg *config.Config) (*gorm.DB, error) {
 	sqlDB.SetMaxOpenConns(100)
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetConnMaxLifetime(time.Hour)
+
 	db.AutoMigrate(&models.Reason{})
 
 	return db, nil

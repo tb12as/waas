@@ -7,7 +7,9 @@ import (
 )
 
 type Config struct {
-	AppPort    string
+	AppEnv  string
+	AppPort string
+
 	DbName     string
 	DbUsername string
 	DbPassword string
@@ -22,6 +24,7 @@ func Load() (*Config, error) {
 	}
 
 	cfg := &Config{
+		AppEnv:  getEnv("APP_ENV", "local"),
 		AppPort: getEnv("APP_PORT", "8080"),
 
 		DbName:     getEnv("DB_NAME", "waas"),

@@ -9,6 +9,10 @@ import (
 	"gorm.io/gorm"
 )
 
+type ReasonHandler struct {
+	DB *gorm.DB
+}
+
 func getRandomReason(db *gorm.DB) (*models.APIReason, error) {
 	random := models.APIReason{}
 
@@ -20,8 +24,8 @@ func getRandomReason(db *gorm.DB) (*models.APIReason, error) {
 	return &random, nil
 }
 
-func RandomReasonHandler(c *gin.Context, db *gorm.DB) {
-	r, err := getRandomReason(db)
+func (h *ReasonHandler) RandomReasonHandler(c *gin.Context) {
+	r, err := getRandomReason(h.DB)
 	if err != nil {
 		pkg.Fail(c, err.Error())
 		return
