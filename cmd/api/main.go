@@ -31,6 +31,8 @@ func main() {
 	} else {
 		r = gin.Default() // local only
 	}
+	r.Use(middleware.SecurityHeaders())
+	r.Use(middleware.CORS(cfg.OriginHost))
 	r.Use(middleware.RateLimiter())
 
 	rh := app.ReasonHandler{DB: db}

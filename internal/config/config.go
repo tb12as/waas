@@ -9,6 +9,9 @@ import (
 type Config struct {
 	AppEnv  string
 	AppPort string
+	// OriginHost is the registrable domain (e.g. "syfq.my.id"). Any origin on
+	// this host or a subdomain of it is allowed for CORS. Empty disables CORS.
+	OriginHost string
 
 	DbName     string
 	DbUsername string
@@ -26,6 +29,8 @@ func Load() (*Config, error) {
 	cfg := &Config{
 		AppEnv:  getEnv("APP_ENV", "local"),
 		AppPort: getEnv("APP_PORT", "8080"),
+
+		OriginHost: getEnv("ORIGIN_HOST", "syfq.my.id"),
 
 		DbName:     getEnv("DB_NAME", "waas"),
 		DbUsername: getEnv("DB_USERNAME", "root"),

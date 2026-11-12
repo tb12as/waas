@@ -54,6 +54,7 @@ Copy `.env.example` to `.env` and fill it in:
 |---------------|---------------------------------|-------------|
 | `APP_ENV`     | Environment name                | `local`     |
 | `APP_PORT`    | Port the API listens on         | `8080`      |
+| `ORIGIN_HOST` | Domain allowed for CORS         | `syfq.my.id`|
 | `DB_NAME`     | MySQL database name             | `waas`      |
 | `DB_USERNAME` | Database user                   | `root`      |
 | `DB_PASSWORD` | Database password               | `root`      |
